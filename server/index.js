@@ -15,22 +15,32 @@ const db = mysql.createConnection({
   database: "datingapp"
 });
 
-// Signup Route
+// Signup API endpoint
 app.post('/signup', (req, res) => {
-  const sql = "INSERT INTO users (`name`, `email`, `password`) VALUES (?)";
-  const values = [
-    req.body.name,
-    req.body.email,
-    req.body.password
-  ];
-
-  db.query(sql, [values], (err, data) => {
-    if (err) {
-      return res.json(err);
-    }
-    return res.json(data);
+    const { name, email, password } = req.body;
+  
+    // Check if the email already exists in the database
+    const checkEmailQuery = 'SELECT * FROM users WHERE `email` = ?';
+    db.query(checkEmailQuery, [email], (err, result) => {
+      if (err) {
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+  
+      if (result.length > 0) {
+        return res.status(409).json({ error: 'Email already exists' });
+      }
+  
+      // If the email does not exist, proceed to create a new user
+      const createUserQuery = 'INSERT INTO users (`name`, `email`, `password`) VALUES (?, ?, ?)';
+      db.query(createUserQuery, [name, email, password], (err, result) => {
+        if (err) {
+          return res.status(500).json({ error: 'Internal server error' });
+        }
+  
+        res.json({ message: 'User created successfully' });
+      });
+    });
   });
-});
 
 // Login Route
 app.post('/login', (req, res) => {
