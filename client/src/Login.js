@@ -2,8 +2,9 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Validation from './LoginValidation';
+import './style.css';
 
-function Login() {
+function Login( { setUser} ) {
   const [values, setValues] = useState({
     email: '',
     password: '',
@@ -21,16 +22,17 @@ function Login() {
     event.preventDefault();
     const err = Validation(values);
     setErrors(err);
-
+  
     if (err.email === '' && err.password === '') {
       axios
-        .post('http://localhost:8081/login', values) // Added http:// in front of localhost
+        .post('http://localhost:8081/login', values)
         .then((res) => {
           if (res.data.errors) {
             setBackendError(res.data.errors);
           } else {
             setBackendError([]);
-            if (res.data === 'Success') {
+            if (res.data && res.data.name) {
+              setUser(res.data); // Set the user info from the API response
               navigate('/home');
             } else {
               alert('No record existed');
@@ -42,9 +44,9 @@ function Login() {
   };
 
   return (
-    <div className='d-flex justify-content-center align-items-center bg-primary vh-100'>
-      <div className='bg-white p-3 rounded w-25'>
-        <h2>Sign-In</h2>
+    <div className='d-flex justify-content-center align-items-center vh-100'>
+      <div className='login-container bg-white p-5 rounded w-25'>
+        <h2 className='text-center'>Sign-In</h2>
         {backendError.length > 0 ? (
           backendError.map((e, index) => (
             <p key={index} className='text-danger'>
@@ -81,7 +83,7 @@ function Login() {
             />
             {errors.password && <span className='text-danger'>{errors.password}</span>}
           </div>
-          <button type='submit' className='btn btn-success w-100 rounded-0'>
+          <button type='submit' className='btn btn-primary w-100'>
             Login
           </button>
           <p>Don't have an account?</p>

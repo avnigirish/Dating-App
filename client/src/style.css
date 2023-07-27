@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f78fb3, #fec5d9); /* Pink gradient background */
+    animation: fadeIn 1.5s ease-in-out; /* Animation duration and timing function */
+    font-family: 'Helvetica Neue', sans-serif;
+  }
+  
+  .home-container,
+  .login-container,
+  .signup-container {
+    background-color: white;
+    animation: fadeIn 1.7s ease-in-out;
+  }
+
+  .form-control.is-invalid {
+    border-color: #dc3545; /* Red border color for invalid form inputs */
+  }
+  
+  .invalid-feedback {
+    color: #dc3545; /* Red color for invalid form input error messages */
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

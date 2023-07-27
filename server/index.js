@@ -54,12 +54,13 @@ app.post('/login', (req, res) => {
         return res.json(err);
       }
       if (data.length > 0) {
-        return res.json("Success");
+        const user = { name: data[0].name, email: data[0].email }; // Include the user's name in the response
+        return res.json(user);
       } else {
-        return res.json("Fail");
+        return res.json(err);
       }
     }
-  });
+  })
 });
 
 app.listen(8081, () => {

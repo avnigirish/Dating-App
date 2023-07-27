@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Validation from './SignupValidation';
 import axios from 'axios';
+import './style.css';
 
 function Signup() {
   const [values, setValues] = useState({
@@ -33,56 +34,49 @@ function Signup() {
   };
 
   return (
-    <div className='d-flex justify-content-center align-items-center bg-primary vh-100'>
-      <div className='bg-white p-3 rounded w-25'>
-        <h2>Sign-Up</h2>
-        <form action='' onSubmit={handleSubmit}>
+    <div className='d-flex justify-content-center align-items-center vh-100'>
+      <div className='signup-container p-5 rounded shadow-lg'>
+        <h2 className='text-center'>Create an Account</h2>
+        <form onSubmit={handleSubmit}>
           <div className='mb-3'>
-            <label htmlFor='name'>
-              <strong>Name</strong>
-            </label>
+            <label htmlFor='name'>Name</label>
             <input
               type='text'
-              placeholder='Enter Name'
+              placeholder='Enter Your Name'
               name='name'
               onChange={handleInput}
-              className='form-control rounded-0'
+              className={`form-control ${errors.name ? 'is-invalid' : ''}`}
             />
-            {errors.name && <span className='text-danger'>{errors.name}</span>}
+            {errors.name && <div className='invalid-feedback'>{errors.name}</div>}
           </div>
           <div className='mb-3'>
-            <label htmlFor='email'>
-              <strong>Email</strong>
-            </label>
+            <label htmlFor='email'>Email</label>
             <input
               type='email'
-              placeholder='Enter Email'
+              placeholder='Enter Your Email'
               name='email'
               onChange={handleInput}
-              className='form-control rounded-0'
+              className={`form-control ${errors.email ? 'is-invalid' : ''}`}
             />
-            {errors.email && <span className='text-danger'>{errors.email}</span>}
+            {errors.email && <div className='invalid-feedback'>{errors.email}</div>}
           </div>
           <div className='mb-3'>
-            <label htmlFor='password'>
-              <strong>Password</strong>
-            </label>
+            <label htmlFor='password'>Password</label>
             <input
               type='password'
-              placeholder='Enter Password'
+              placeholder='Enter Your Password'
               name='password'
               onChange={handleInput}
-              className='form-control rounded-0'
+              className={`form-control ${errors.password ? 'is-invalid' : ''}`}
             />
-            {errors.password && <span className='text-danger'>{errors.password}</span>}
+            {errors.password && <div className='invalid-feedback'>{errors.password}</div>}
           </div>
-          <button type='submit' className='btn btn-success w-100 rounded-0'>
+          <button type='submit' className='btn btn-primary w-100'>
             Sign up
           </button>
-          <p>You agree to our terms and policies</p>
-          <Link to='/' className='btn btn-default border w-100 bg-light rounded-0 text-decoration-none'>
-            Login
-          </Link>
+          <p className='mt-3 mb-0 text-center'>
+            Already have an account? <Link to='/login'>Log in</Link>
+          </p>
         </form>
       </div>
     </div>
