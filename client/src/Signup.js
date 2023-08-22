@@ -33,6 +33,45 @@ function Signup() {
     }
   };
 
+    // Function to handle Google Sign-In
+  const handleGoogleSignUp = () => {
+    // Load Google Sign-In API script
+    
+    if (window.gapi) {
+      window.gapi.load('auth2', () => {
+        window.gapi.auth2
+          .init({
+            client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+          })
+          .then((auth2) => {
+            // Sign in with Google
+            auth2.signIn().then((googleUser) => {
+              const profile = googleUser.getBasicProfile();
+              const email = profile.getEmail();
+              const name = profile.getName();
+
+              // Submit the Google sign-up data to your server
+              axios
+                .post('http://localhost:8081/signup', {
+                  name: name,
+                  email: email,
+                  googleIdToken: googleUser.getAuthResponse().id_token,
+                })
+                .then((res) => {
+                  // Handle the response if needed
+                })
+                .catch((err) => console.log(err));
+            });
+          })
+          .catch((error) => {
+            console.log('Google Sign-In Error:', error);
+          });
+      });
+    } else{
+      console.log('Google API not loaded.');
+    }
+  };
+
   return (
     <div className='d-flex justify-content-center align-items-center vh-100'>
       <div className='signup-container p-5 rounded shadow-lg'>
@@ -74,10 +113,17 @@ function Signup() {
           <button type='submit' className='btn btn-primary w-100'>
             Sign up
           </button>
-          <p className='mt-3 mb-0 text-center'>
-            Already have an account? <Link to='/login'>Log in</Link>
-          </p>
         </form>
+        <div className='or-divider text-center mt-3'>OR</div>
+        <button
+          onClick={handleGoogleSignUp}
+          className='btn btn-google w-100 mt-3'
+        >
+          Sign up with Google
+        </button>
+        <p className='mt-3 mb-0 text-center'>
+          Already have an account? <Link to='/login'>Log in</Link>
+        </p>
       </div>
     </div>
   );

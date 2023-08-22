@@ -1,0 +1,12 @@
+GET http://localhost:8081/posts
+Authorization: Bearer
+334e6e268ea55bb93ef0972f078da057ea5cba06a7289088f0224ba4a9990e5281705667f89bb3b3906b64e07bde0b3a33ec9bbbb8000c251b646d2e5d208f7b
+
+###
+
+POST http://localhost:8081/posts
+Content-Type: application/json
+
+{
+    "username": "Avni"
+}

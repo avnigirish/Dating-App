@@ -45,7 +45,7 @@ function Login( { setUser} ) {
 
   return (
     <div className='d-flex justify-content-center align-items-center vh-100'>
-      <div className='login-container bg-white p-5 rounded w-25'>
+      <div className='login-container bg-white p-5 rounded shadow-lg'>
         <h2 className='text-center'>Sign-In</h2>
         {backendError.length > 0 ? (
           backendError.map((e, index) => (

@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #f78fb3, #fec5d9); /* Pink gradient background */
+    background: linear-gradient(45deg, #f78fb3, #fec5d9); /* Pink gradient background */
     animation: fadeIn 1.5s ease-in-out; /* Animation duration and timing function */
     font-family: 'Helvetica Neue', sans-serif;
   }
@@ -19,6 +19,16 @@ body {
   
   .invalid-feedback {
     color: #dc3545; /* Red color for invalid form input error messages */
+  }
+
+  .or-divider {
+    font-weight: bold;
+    color: #777;
+  }
+  
+  .btn-google {
+    background-color: #db4437;
+    color: white;
   }
   
   @keyframes fadeIn {
